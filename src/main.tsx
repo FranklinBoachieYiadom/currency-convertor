@@ -29,7 +29,7 @@ function App() {
   useEffect(() => { document.documentElement.dataset.theme = dark ? 'dark' : 'light'; localStorage.setItem('cc-theme', dark ? 'dark' : 'light') }, [dark])
   useEffect(() => { localStorage.setItem('cc-amount', String(amount)); localStorage.setItem('cc-precision', String(precision)); localStorage.setItem('cc-currencies', JSON.stringify(codes)); localStorage.setItem('cc-base', base) }, [amount, precision, codes, base])
   useEffect(() => { const fn = (event: Event) => { event.preventDefault(); setInstallPrompt(event as BeforeInstallPromptEvent) }; window.addEventListener('beforeinstallprompt', fn); return () => window.removeEventListener('beforeinstallprompt', fn) }, [])
-  useEffect(() => { if (!('serviceWorker' in navigator)) return; navigator.serviceWorker.register('/sw.js').catch(() => undefined) }, [])
+  useEffect(() => { if (!('serviceWorker' in navigator)) return; navigator.serviceWorker.register(`${import.meta.env.BASE_URL}sw.js`).catch(() => undefined) }, [])
   useEffect(() => {
     const key = 'cc-rates-' + base, stored = localStorage.getItem(key)
     if (stored) { const cache = JSON.parse(stored); setRates(cache.rates); setStatus(cache.date === today() ? 'Updated today' : 'Cached rates') }
